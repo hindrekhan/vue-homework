@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Hindrek Hannus</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <input placeholder="Add new item.." type="text" v-model="text"><button @click="add">Add</button>
+        <h2>All Tasks</h2>
+        <ul v-if="allTasks.length">
+            <li v-for="task in allTasks">
+                <label>
+                    {{task.title}} <input type="checkbox" v-model="task.isAvailable">
+                </label>
+            </li>
+        </ul>
+        <h2>Completed Tasks</h2>
+        <ul v-if="completeTasks.length">
+            <li v-for="task in completeTasks">
+                <label>
+                     {{task.title}} <input type="checkbox" v-model="task.isComplete">
+                </label>
+            </li>
+        </ul>
+        <h2>Incompleted Tasks</h2>
+        <ul v-if="incompleteTasks.length">
+            <li v-for="task in incompleteTasks">
+                <label>
+                     {{task.title}} <input type="checkbox" v-model="task.isComplete">
+                </label>
+            </li>
+        </ul>
+    </div>
+    <script>
+        let app = new Vue({
+            el: '#root',
+            data: {
+                task: [{
+                    title: 'Go to store',
+                    isComplete: false,
+                    isAvailable: false
+                }, {
+                    title: 'Find a hobby',
+                    isComplete: false,
+                    isAvailable: false
+                }, {
+                    title: 'Download movie',
+                    isComplete: false,
+                    isAvailable: false
+                }, {
+                    title: 'Make dinner',
+                    isComplete: false,
+                    isAvailable: false
+                }, {
+                    title: 'Eat food',
+                    isComplete: false,
+                    isAvailable: false
+                },]
+            },
+            methods: {
+                add() {
+                    this.task.push({
+                        title: this.text,
+                        isComplete: false
+                    });
+                    this.text= '';
+                }
+            },
+            computed: {
+                allTasks() {
+                    return this.task
+                },
+                completeTasks() {
+                    return this.task.filter(task => task.isAvailable).filter(task => task.isComplete)
+                },
+                
+                incompleteTasks() {
+                    return this.task.filter(task => task.isAvailable).filter(task => !task.isComplete)
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
